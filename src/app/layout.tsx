@@ -25,10 +25,8 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <main>
-          <Navbar />
-          {children}
-        </main>
+        <Navbar />
+        <main className="px-16 py-8">{children}</main>
         <Toaster />
       </body>
     </html>
