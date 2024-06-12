@@ -33,7 +33,7 @@ export default function Navbar() {
             key={link.href}
             href={link.href}
             className={cn(
-              "text-xl font-semibold hover:text-zinc-800",
+              "text-lg font-semibold hover:text-zinc-800",
               pathname === link.href
                 ? "underline hover:text-zinc-800 text-zinc-800"
                 : "text-zinc-500"
