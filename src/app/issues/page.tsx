@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function IssuesPage() {
   return (
-    <section>
+    <section className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between">
         issues
         <Button asChild>
