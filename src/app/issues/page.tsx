@@ -1,4 +1,5 @@
 import FilterStatus from "@/components/FilterStatus"
+import PaginationIssue from "@/components/PaginationIssue"
 import StatusBadge from "@/components/StatusBadge"
 import { Button } from "@/components/ui/button"
 import {
@@ -19,6 +20,7 @@ interface IssuesPageProps {
   searchParams: {
     status: Status
     orderBy: keyof Issue
+    page: number
   }
 }
 
@@ -41,10 +43,15 @@ export default async function IssuesPage({ searchParams }: IssuesPageProps) {
     ? { [searchParams.orderBy]: "asc" }
     : undefined
 
+    const currentPage = 1
+    const issuePerPage = 5
+
   const issues = await prisma.issue.findMany({
     where: { status },
     orderBy,
   })
+
+  const totalIssues = await prisma.issue.count()
 
   return (
     <section className="max-w-6xl mx-auto space-y-3">
@@ -92,6 +99,7 @@ export default async function IssuesPage({ searchParams }: IssuesPageProps) {
           ))}
         </TableBody>
       </Table>
+      <PaginationIssue currentPage={currentPage} totalIssues={totalIssues} pageSize={issuePerPage} />
     </section>
   )
 }
