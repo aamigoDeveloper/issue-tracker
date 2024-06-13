@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation"
 
 export default function Navbar() {
   const pathname = usePathname()
-  console.log(pathname)
 
   const links: {
     label: string
