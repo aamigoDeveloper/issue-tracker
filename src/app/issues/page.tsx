@@ -20,7 +20,7 @@ interface IssuesPageProps {
   searchParams: {
     status: Status
     orderBy: keyof Issue
-    page: number
+    page: string
   }
 }
 
@@ -37,21 +37,25 @@ export default async function IssuesPage({ searchParams }: IssuesPageProps) {
     ? searchParams.status
     : undefined
 
+  const where = { status }
+
   const orderBy = columns
     .map((column) => column.value)
     .includes(searchParams.orderBy)
     ? { [searchParams.orderBy]: "asc" }
     : undefined
 
-    const currentPage = 1
-    const issuePerPage = 5
+  const page = parseInt(searchParams.page) || 1
+  const pageSize = 7
 
   const issues = await prisma.issue.findMany({
-    where: { status },
+    where,
     orderBy,
+    skip: (page - 1) * pageSize,
+    take: pageSize,
   })
 
-  const totalIssues = await prisma.issue.count()
+  const issueCount = await prisma.issue.count({ where })
 
   return (
     <section className="max-w-6xl mx-auto space-y-3">
@@ -99,7 +103,11 @@ export default async function IssuesPage({ searchParams }: IssuesPageProps) {
           ))}
         </TableBody>
       </Table>
-      <PaginationIssue currentPage={currentPage} totalIssues={totalIssues} pageSize={issuePerPage} />
+      <PaginationIssue
+        currentPage={page}
+        totalIssues={issueCount}
+        pageSize={pageSize}
+      />
     </section>
   )
 }

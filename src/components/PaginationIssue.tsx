@@ -9,7 +9,9 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { Button } from "./ui/button"
 
 interface PaginationProps {
   currentPage: number
@@ -26,7 +28,7 @@ export default function PaginationIssue({
   const searchParams = useSearchParams()
 
   const changePage = (page: number) => {
-    const params = new URLSearchParams()
+    const params = new URLSearchParams(searchParams)
 
     params.set("page", page.toString())
     router.push(`?${params.toString()}`)
@@ -34,29 +36,48 @@ export default function PaginationIssue({
 
   const pageCount = Math.ceil(totalIssues / pageSize)
 
-  if (pageCount >= 1) return null
+  if (pageCount <= 1) return null
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious href="#" />
+          <Button
+            disabled={currentPage === 1}
+            variant={"outline"}
+            onClick={() => changePage(1)}
+          >
+            First Page
+          </Button>
         </PaginationItem>
         <PaginationItem>
-          <PaginationLink href="#">1</PaginationLink>
+          <Button
+            disabled={currentPage === 1}
+            variant={"ghost"}
+            onClick={() => changePage(currentPage - 1)}
+          >
+            <ChevronLeftIcon />
+          </Button>
+        </PaginationItem>
+        <p className="text-zinc-600 font-semibold">
+          Page {currentPage} of {pageCount}
+        </p>
+        <PaginationItem>
+          <Button
+            disabled={currentPage === pageCount}
+            variant={"ghost"}
+            onClick={() => changePage(currentPage + 1)}
+          >
+            <ChevronRightIcon />
+          </Button>
         </PaginationItem>
         <PaginationItem>
-          <PaginationLink href="#" isActive>
-            2
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">3</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationNext href="#" />
+          <Button
+            disabled={currentPage === pageCount}
+            variant={"outline"}
+            onClick={() => changePage(pageCount)}
+          >
+            Last Page
+          </Button>
         </PaginationItem>
       </PaginationContent>
     </Pagination>
