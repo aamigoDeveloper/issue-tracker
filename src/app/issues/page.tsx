@@ -11,14 +11,22 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import prisma from "@/lib/db"
-import { Status } from "@prisma/client"
+import { Issue, Status } from "@prisma/client"
+import { ArrowUp } from "lucide-react"
 import Link from "next/link"
 
 interface IssuesPageProps {
   searchParams: {
     status: Status
+    orderBy: keyof Issue
   }
 }
+
+const columns: { label: string; value: keyof Issue }[] = [
+  { label: "Issue", value: "title" },
+  { label: "Status", value: "status" },
+  { label: "CreatedAt", value: "createdAt" },
+]
 
 export default async function IssuesPage({ searchParams }: IssuesPageProps) {
   const statuses = Object.values(Status)
@@ -27,8 +35,13 @@ export default async function IssuesPage({ searchParams }: IssuesPageProps) {
     ? searchParams.status
     : undefined
 
+    const orderBy = searchParams.orderBy 
+    ? { [searchParams.orderBy]: "asc" }
+    : undefined
+
   const issues = await prisma.issue.findMany({
     where: { status },
+    orderBy
   })
 
   return (
@@ -45,9 +58,20 @@ export default async function IssuesPage({ searchParams }: IssuesPageProps) {
         </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>Issues</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>CreatedAt</TableHead>
+            {columns.map((column) => (
+              <TableHead key={column.value}>
+                <Link
+                  href={{
+                    query: { ...searchParams, orderBy: column.value },
+                  }}
+                >
+                  {column.label}
+                </Link>
+                {column.value === searchParams.orderBy && (
+                  <ArrowUp size={15} className="inline" />
+                )}
+              </TableHead>
+            ))}
           </TableRow>
         </TableHeader>
         <TableBody>
