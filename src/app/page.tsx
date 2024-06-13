@@ -1,5 +1,5 @@
 import IssueSummery from "@/components/IssueSummery";
-import IssuesBar from "@/components/IssuesBar";
+import IssueChart from "@/components/IssueChart";
 import LatestIssues from "@/components/LatestIssues";
 import prisma from "@/lib/db";
 
@@ -16,10 +16,10 @@ export default async function Home() {
   })
   
   return (
-    <section className="max-w-[1300px] mx-auto grid grid-cols-2 gap-8">
-        <div>
+    <section className="max-w-[1300px] mx-auto grid grid-cols-2 gap-5">
+        <div className="flex flex-col gap-5">
           <IssueSummery open={open} inProgress={inProgress} closed={closed} />
-          <IssuesBar />
+          <IssueChart open={open} inProgress={inProgress} closed={closed} />
         </div>
         <LatestIssues />
     </section>
