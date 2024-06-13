@@ -3,11 +3,7 @@
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
+  PaginationItem
 } from "@/components/ui/pagination"
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
