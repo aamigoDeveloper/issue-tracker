@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import prisma from "@/lib/db"
 import { Pencil, Trash } from "lucide-react"
 import Link from "next/link"
+import DeleteIssue from "./DeleteIssue"
 
 export default async function IssueDetailPage({
   params,
@@ -24,13 +25,7 @@ export default async function IssueDetailPage({
             Edit
           </Link>
         </Button>
-        <Button
-          variant={"destructive"}
-          className="w-32 flex items-center gap-2"
-        >
-          <Trash size={16} />
-          Delete
-        </Button>
+        <DeleteIssue issueId={issue!.id} />
       </div>
     </section>
   )

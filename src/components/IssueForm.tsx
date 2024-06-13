@@ -20,6 +20,7 @@ import { useFormStatus } from "react-dom"
 import { Loader2 } from "lucide-react"
 import { useTransition } from "react"
 import { Issue } from "@prisma/client"
+import { useToast } from "./ui/use-toast"
 
 interface IssueFormProps {
   issue?: Issue
@@ -35,12 +36,27 @@ export default function IssueForm({ issue }: IssueFormProps) {
     },
   })
 
+  const { toast } = useToast()
+
   const onSubmit = async (values: IssueValidationSchema) => {
     startTransition(async () => {
-      if (issue) {
-        await updateIssue(issue.id, values)
-      } else {
-        await createIssue(values)
+      try {
+        if (issue) {
+          await updateIssue(issue.id, values)
+          toast({
+            title: "Issue Updated Successfully!",
+          })
+        } else {
+          await createIssue(values)
+          toast({
+            title: "Issue Created Successfully!",
+          })
+        }
+      } catch (error) {
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "There was a problem with your request.",
+        })
       }
     })
   }
