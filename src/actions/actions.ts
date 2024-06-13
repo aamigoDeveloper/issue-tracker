@@ -6,8 +6,8 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
 interface FormData {
-    title: string,
-    description: string
+  title: string
+  description: string
 }
 
 export const createIssue = async (formData: FormData) => {
@@ -27,5 +27,22 @@ export const createIssue = async (formData: FormData) => {
   })
 
   revalidatePath("/issues/new")
+  redirect("/issues")
+}
+
+export const deleteIssue = async (id: number) => {
+  const issue = await prisma.issue.findUnique({
+    where: { id },
+  })
+
+  if (!issue) {
+    throw new Error("No Issue found.")
+  }
+
+  await prisma.issue.delete({
+    where: { id: issue?.id },
+  })
+
+  revalidatePath(`/issues/${issue?.id}`)
   redirect("/issues")
 }
