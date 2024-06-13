@@ -18,7 +18,7 @@ export default async function IssueDetailPage({
         <p className="text-zinc-700">{issue?.description}</p>
       </div>
       <div className="space-y-4">
-        <Button asChild className="w-32 flex items-center gap-2">
+        <Button asChild className="w-32 flex items-center gap-2 bg-blue-600 hover:bg-blue-500">
           <Link href={`/issues/edit/${issue?.id}`}>
             <Pencil size={16} />
             Edit

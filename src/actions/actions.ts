@@ -46,3 +46,32 @@ export const deleteIssue = async (id: number) => {
   revalidatePath(`/issues/${issue?.id}`)
   redirect("/issues")
 }
+
+export const updateIssue = async (id: number, formData: FormData) => {
+  const issue = await prisma.issue.findUnique({
+    where: { id },
+  })
+
+  if (!issue) {
+    throw new Error("No Issue found.")
+  }
+
+  const validate = issueSchema.safeParse(formData)
+
+  if (!validate.success) {
+    return validate.error.format()
+  }
+
+  const { title, description } = validate.data
+
+  await prisma.issue.update({
+    where: { id },
+    data: {
+      title,
+      description,
+    },
+  })
+
+  revalidatePath(`/issues/edit/${issue.id}`)
+  redirect("/issues")
+}

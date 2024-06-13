@@ -15,24 +15,33 @@ import { Textarea } from "@/components/ui/textarea"
 import { useForm } from "react-hook-form"
 import { IssueValidationSchema, issueSchema } from "@/lib/validation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { createIssue } from "@/actions/actions"
+import { createIssue, updateIssue } from "@/actions/actions"
 import { useFormStatus } from "react-dom"
 import { Loader2 } from "lucide-react"
 import { useTransition } from "react"
+import { Issue } from "@prisma/client"
 
-export default function IssueForm() {
+interface IssueFormProps {
+  issue?: Issue
+}
+
+export default function IssueForm({ issue }: IssueFormProps) {
   const [isPending, startTransition] = useTransition()
   const form = useForm<IssueValidationSchema>({
     resolver: zodResolver(issueSchema),
     defaultValues: {
-      title: "",
-      description: "",
+      title: issue?.title,
+      description: issue?.description,
     },
   })
 
   const onSubmit = async (values: IssueValidationSchema) => {
     startTransition(async () => {
-      await createIssue(values)
+      if (issue) {
+        await updateIssue(issue.id, values)
+      } else {
+        await createIssue(values)
+      }
     })
   }
 
@@ -76,7 +85,8 @@ export default function IssueForm() {
             )}
           />
           <Button type="submit">
-            {isPending ? <Loader2 size={16} /> : "Add Issue"}
+            {isPending && <Loader2 size={16} />}
+            {issue ? "Edit Issue" : "Add Issue"}
           </Button>
         </form>
       </Form>
