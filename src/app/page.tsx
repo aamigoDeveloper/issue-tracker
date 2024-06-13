@@ -17,9 +17,11 @@ export default async function Home() {
   
   return (
     <section className="max-w-[1300px] mx-auto grid grid-cols-2 gap-8">
-        <IssueSummery open={open} inProgress={inProgress} closed={closed} />
+        <div>
+          <IssueSummery open={open} inProgress={inProgress} closed={closed} />
+          <IssuesBar />
+        </div>
         <LatestIssues />
-        <IssuesBar />
     </section>
   );
 }

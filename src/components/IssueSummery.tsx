@@ -20,9 +20,9 @@ export default function IssueSummery({
   ]
 
   return (
-    <div className="flex space-x-5">
+    <div className="flex justify-around">
       {containers.map((container) => (
-        <Card key={container.status} className="max-w-[200px] text-center">
+        <Card key={container.status} className="text-center">
           <CardHeader className="font-medium">
             <Link
               className="text-zinc-600 hover:text-zinc-800 hover:underline"

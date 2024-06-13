@@ -1,5 +1,39 @@
-export default function LatestIssues() {
+import prisma from "@/lib/db"
+import { Table, TableBody, TableCell, TableRow } from "./ui/table"
+import { Card } from "./ui/card"
+import Link from "next/link"
+import StatusBadge from "./StatusBadge"
+
+export default async function LatestIssues() {
+  const latestIssues = await prisma.issue.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 6,
+  })
+
   return (
-    <div>LatestIssues</div>
+    <Card className="p-3">
+      <h1 className="text-xl font-semibold">Latest Issues</h1>
+      <Table>
+        <TableBody>
+          {latestIssues.map((issue) => (
+            <TableRow key={issue.id}>
+              <TableCell>
+                <Link
+                  href={`/issues/${issue.id}`}
+                  className="text-zinc-600 hover:text-zinc-800 hover:underline"
+                >
+                  {issue.title}
+                </Link>
+              </TableCell>
+              <TableCell className="hidden sm:block">
+                <StatusBadge status={issue.status} />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Card>
   )
 }
