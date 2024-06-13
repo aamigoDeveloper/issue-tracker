@@ -26,8 +26,10 @@ export default function RootLayout({
         )}
       >
         <Navbar />
-        <main className="px-16 py-8">{children}</main>
-        <Toaster />
+        <main className="px-16 py-8">
+          {children}
+          <Toaster />
+        </main>
       </body>
     </html>
   )

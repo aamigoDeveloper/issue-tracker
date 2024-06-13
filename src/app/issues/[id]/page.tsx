@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import prisma from "@/lib/db"
 import { Pencil, Trash } from "lucide-react"
 import Link from "next/link"
+import DeleteIssue from "./DeleteIssue"
 
 export default async function IssueDetailPage({
   params,
@@ -18,19 +19,13 @@ export default async function IssueDetailPage({
         <p className="text-zinc-700">{issue?.description}</p>
       </div>
       <div className="space-y-4">
-        <Button asChild className="w-32 flex items-center gap-2">
+        <Button asChild className="w-32 flex items-center gap-2 bg-blue-600 hover:bg-blue-500">
           <Link href={`/issues/edit/${issue?.id}`}>
             <Pencil size={16} />
             Edit
           </Link>
         </Button>
-        <Button
-          variant={"destructive"}
-          className="w-32 flex items-center gap-2"
-        >
-          <Trash size={16} />
-          Delete
-        </Button>
+        <DeleteIssue issueId={issue!.id} />
       </div>
     </section>
   )

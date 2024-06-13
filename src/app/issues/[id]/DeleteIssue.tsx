@@ -13,9 +13,11 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
 import { Trash } from "lucide-react"
 
 export default function DeleteIssue({ issueId }: { issueId: number }) {
+  const { toast } = useToast()
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -40,7 +42,13 @@ export default function DeleteIssue({ issueId }: { issueId: number }) {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
-            onClick={() => deleteIssue(issueId)}
+            onClick={() => {
+              deleteIssue(issueId)
+              toast({
+                title: "Issue Deleted Successfully!",
+                variant: "destructive",
+              })
+            }}
             className="bg-red-500 hover:bg-red-400"
           >
             Delete
