@@ -20,7 +20,7 @@ export default function IssueSummary({
   ]
 
   return (
-    <div className="flex justify-around">
+    <div className="flex justify-between">
       {containers.map((container) => (
         <Card key={container.status} className="text-center">
           <CardHeader className="font-medium">
