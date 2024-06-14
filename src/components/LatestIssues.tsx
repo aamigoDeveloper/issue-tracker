@@ -14,7 +14,7 @@ export default async function LatestIssues() {
 
   return (
     <Card className="p-3">
-      <h1 className="text-xl font-semibold">Latest Issues</h1>
+      <h1 className="text-xl font-semibold mb-2">Latest Issues</h1>
       <Table>
         <TableCaption>A List of Latest Issues</TableCaption>
         <TableBody>
