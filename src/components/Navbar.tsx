@@ -5,8 +5,16 @@ import { Bug } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ModeToggle } from "./ModeToggle"
+import {
+  RegisterLink,
+  LoginLink,
+  LogoutLink,
+} from "@kinde-oss/kinde-auth-nextjs/components"
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
+import { Button } from "./ui/button"
 
 export default function Navbar() {
+  const { user } = useKindeBrowserClient()
   const pathname = usePathname()
 
   const links: {
@@ -44,9 +52,25 @@ export default function Navbar() {
             </Link>
           ))}
         </div>
-        <>
+        <div className="flex items-center gap-2">
+          <div className="space-x-2">
+            {!user ? (
+              <>
+                <Button asChild variant={"outline"}>
+                  <RegisterLink>Sign up</RegisterLink>
+                </Button>
+                <Button asChild>
+                  <LoginLink>Sign in</LoginLink>
+                </Button>
+              </>
+            ) : (
+              <Button asChild>
+                <LogoutLink>Sign out</LogoutLink>
+              </Button>
+            )}
+          </div>
           <ModeToggle />
-        </>
+        </div>
       </nav>
     </header>
   )
