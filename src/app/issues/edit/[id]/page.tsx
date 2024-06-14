@@ -21,8 +21,8 @@ export default async function EditIssuePage({ params }: EditIssuePageProps) {
     where: { id: parseInt(params.id) },
   })
   return (
-    <div>
+    <section>
       <IssueForm issue={issue!} />
-    </div>
+    </section>
   )
 }
