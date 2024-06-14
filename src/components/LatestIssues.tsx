@@ -1,5 +1,5 @@
 import prisma from "@/lib/db"
-import { Table, TableBody, TableCell, TableRow } from "./ui/table"
+import { Table, TableBody, TableCaption, TableCell, TableRow } from "./ui/table"
 import { Card } from "./ui/card"
 import Link from "next/link"
 import StatusBadge from "./StatusBadge"
@@ -16,6 +16,7 @@ export default async function LatestIssues() {
     <Card className="p-3">
       <h1 className="text-xl font-semibold">Latest Issues</h1>
       <Table>
+        <TableCaption>A List of Latest Issues</TableCaption>
         <TableBody>
           {latestIssues.map((issue) => (
             <TableRow key={issue.id}>

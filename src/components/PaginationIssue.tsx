@@ -54,7 +54,7 @@ export default function PaginationIssue({
             <ChevronLeftIcon />
           </Button>
         </PaginationItem>
-        <p className="text-zinc-600 font-semibold">
+        <p className="hidden sm:block text-zinc-600 font-semibold">
           Page {currentPage} of {pageCount}
         </p>
         <PaginationItem>

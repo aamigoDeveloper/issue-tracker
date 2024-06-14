@@ -23,7 +23,8 @@ export default function DeleteIssue({ issueId }: { issueId: number }) {
       <AlertDialogTrigger asChild>
         <Button
           variant={"destructive"}
-          className="w-32 flex items-center gap-2"
+          className="flex items-center gap-2"
+          size={"lg"}
         >
           <Trash size={16} />
           Delete

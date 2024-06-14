@@ -1,7 +1,13 @@
-import IssueSummery from "@/components/IssueSummery";
+import IssueSummary from "@/components/IssueSummary";
 import IssueChart from "@/components/IssueChart";
 import LatestIssues from "@/components/LatestIssues";
 import prisma from "@/lib/db";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Issue Tracker - Dashboard',
+  description: "View a summary of project issues"
+}
 
 export default async function Home() {
   const open = await prisma.issue.count({ 
@@ -16,9 +22,9 @@ export default async function Home() {
   })
   
   return (
-    <section className="max-w-[1300px] mx-auto grid grid-cols-2 gap-5">
+    <section className="max-w-[1300px] mx-auto grid sm:grid-cols-2 grid-cols-1 gap-5">
         <div className="flex flex-col gap-5">
-          <IssueSummery open={open} inProgress={inProgress} closed={closed} />
+          <IssueSummary open={open} inProgress={inProgress} closed={closed} />
           <IssueChart open={open} inProgress={inProgress} closed={closed} />
         </div>
         <LatestIssues />

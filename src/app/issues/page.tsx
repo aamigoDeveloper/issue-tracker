@@ -14,7 +14,14 @@ import {
 import prisma from "@/lib/db"
 import { Issue, Status } from "@prisma/client"
 import { ArrowUp } from "lucide-react"
+import { Metadata } from "next"
 import Link from "next/link"
+
+
+export const metadata: Metadata = {
+  title: 'Issue Tracker - Issue List',
+  description: "View all project issues"
+}
 
 interface IssuesPageProps {
   searchParams: {
@@ -72,7 +79,14 @@ export default async function IssuesPage({ searchParams }: IssuesPageProps) {
         <TableHeader>
           <TableRow>
             {columns.map((column) => (
-              <TableHead key={column.value}>
+              <TableHead
+                key={column.value}
+                className={
+                  column.label === "CreatedAt"
+                    ? "hidden sm:flex items-center"
+                    : undefined
+                }
+              >
                 <Link
                   href={{
                     query: { ...searchParams, orderBy: column.value },
@@ -98,7 +112,9 @@ export default async function IssuesPage({ searchParams }: IssuesPageProps) {
               <TableCell>
                 <StatusBadge status={issue.status} />
               </TableCell>
-              <TableCell>{issue.createdAt.toISOString()}</TableCell>
+              <TableCell className="hidden sm:block">
+                {issue.createdAt.toISOString()}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

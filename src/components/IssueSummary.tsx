@@ -8,7 +8,7 @@ interface IssueSummeryProps {
   closed: number
 }
 
-export default function IssueSummery({
+export default function IssueSummary({
   open,
   inProgress,
   closed,
