@@ -23,7 +23,7 @@ export default async function LatestIssues() {
               <TableCell>
                 <Link
                   href={`/issues/${issue.id}`}
-                  className="text-zinc-600 hover:text-zinc-800 hover:underline"
+                  className="text-zinc-600 hover:text-zinc-800 hover:underline dark:text-slate-100"
                 >
                   {issue.title}
                 </Link>

@@ -36,12 +36,12 @@ export default async function IssueDetailPage({
           <StatusBadge status={issue?.status!} />
           <span>{issue?.createdAt.toISOString()}</span>
         </div>
-        <p className="text-zinc-700">{issue?.description}</p>
+        <p className="text-zinc-700 dark:text-slate-300">{issue?.description}</p>
       </div>
       <div className="flex flex-col space-y-4 w-full sm:max-w-[200px]">
         <Button
           asChild
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500"
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 dark:text-white"
           size={"lg"}
         >
           <Link href={`/issues/edit/${issue?.id}`}>

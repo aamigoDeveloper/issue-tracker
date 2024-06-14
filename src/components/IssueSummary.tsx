@@ -25,13 +25,13 @@ export default function IssueSummary({
         <Card key={container.status} className="text-center">
           <CardHeader className="font-medium">
             <Link
-              className="text-zinc-600 hover:text-zinc-800 hover:underline"
+              className="text-zinc-600 hover:text-zinc-800 hover:underline dark:text-slate-100"
               href={`/issues?status=${container.status}`}
             >
               {container.label}
             </Link>
           </CardHeader>
-          <CardContent className="font-bold text-center text-lg">
+          <CardContent className="font-bold text-center text-lg text-slate-300">
             {container.value}
           </CardContent>
         </Card>

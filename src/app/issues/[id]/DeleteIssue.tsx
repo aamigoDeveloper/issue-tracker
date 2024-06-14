@@ -50,7 +50,7 @@ export default function DeleteIssue({ issueId }: { issueId: number }) {
                 variant: "destructive",
               })
             }}
-            className="bg-red-500 hover:bg-red-400"
+            className="bg-red-500 hover:bg-red-400 dark:text-white"
           >
             Delete
           </AlertDialogAction>
