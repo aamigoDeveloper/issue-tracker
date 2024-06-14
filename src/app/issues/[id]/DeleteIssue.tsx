@@ -1,6 +1,6 @@
 "use client"
 
-import { deleteIssue } from "@/actions/actions"
+import { deleteIssue } from "@/actions/issueActions"
 import {
   AlertDialog,
   AlertDialogAction,

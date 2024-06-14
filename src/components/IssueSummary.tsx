@@ -31,7 +31,7 @@ export default function IssueSummary({
               {container.label}
             </Link>
           </CardHeader>
-          <CardContent className="font-bold text-center text-lg text-slate-300">
+          <CardContent className="font-bold text-center text-lg dark:text-slate-300">
             {container.value}
           </CardContent>
         </Card>
