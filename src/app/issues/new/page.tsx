@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 
 export default function NewIssuePage() {
   return (
-    <div>
+    <section>
       <IssueForm />
-    </div>
+    </section>
   )
 }
