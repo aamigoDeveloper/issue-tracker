@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/db"
 import { issueSchema } from "@/lib/validation"
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
@@ -11,6 +12,14 @@ interface FormData {
 }
 
 export const createIssue = async (formData: FormData) => {
+  const { getUser } = getKindeServerSession()
+
+  const user = await getUser()
+
+  if (!user) {
+    throw new Error("User not Found")
+  }
+
   const validate = issueSchema.safeParse(formData)
 
   if (!validate.success) {
@@ -23,6 +32,7 @@ export const createIssue = async (formData: FormData) => {
     data: {
       title,
       description,
+      userId: user.id,
     },
   })
 
@@ -37,6 +47,14 @@ export const deleteIssue = async (id: number) => {
 
   if (!issue) {
     throw new Error("No Issue found.")
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: issue?.userId },
+  })
+
+  if (!user) {
+    throw new Error("User not Found")
   }
 
   await prisma.issue.delete({
@@ -54,6 +72,14 @@ export const updateIssue = async (id: number, formData: FormData) => {
 
   if (!issue) {
     throw new Error("No Issue found.")
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: issue?.userId },
+  })
+
+  if (!user) {
+    throw new Error("User not Found")
   }
 
   const validate = issueSchema.safeParse(formData)
