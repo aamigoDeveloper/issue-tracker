@@ -5,6 +5,7 @@ import Link from "next/link"
 import DeleteIssue from "./DeleteIssue"
 import StatusBadge from "@/components/StatusBadge"
 import { cache } from "react"
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
 
 interface IssueDetailPageProps {
   params: { id: string }
@@ -27,6 +28,8 @@ export default async function IssueDetailPage({
   params,
 }: IssueDetailPageProps) {
   const issue = await fetchUser(parseInt(params.id))
+  const { getUser } = getKindeServerSession()
+  const user = await getUser()
 
   return (
     <section className="max-w-6xl mx-auto flex sm:flex-row flex-col space-y-5 items-center justify-between gap-4">
@@ -36,21 +39,25 @@ export default async function IssueDetailPage({
           <StatusBadge status={issue?.status!} />
           <span>{issue?.createdAt.toISOString()}</span>
         </div>
-        <p className="text-zinc-700 dark:text-slate-300">{issue?.description}</p>
+        <p className="text-zinc-700 dark:text-slate-300">
+          {issue?.description}
+        </p>
       </div>
-      <div className="flex flex-col space-y-4 w-full sm:max-w-[200px]">
-        <Button
-          asChild
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 dark:text-white"
-          size={"lg"}
-        >
-          <Link href={`/issues/edit/${issue?.id}`}>
-            <Pencil size={16} />
-            Edit
-          </Link>
-        </Button>
-        <DeleteIssue issueId={issue!.id} />
-      </div>
+      {user?.id === issue?.userId && (
+        <div className="flex flex-col space-y-4 w-full sm:max-w-[200px]">
+          <Button
+            asChild
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 dark:text-white"
+            size={"lg"}
+          >
+            <Link href={`/issues/edit/${issue?.id}`}>
+              <Pencil size={16} />
+              Edit
+            </Link>
+          </Button>
+          <DeleteIssue issueId={issue!.id} />
+        </div>
+      )}
     </section>
   )
 }
