@@ -9,6 +9,7 @@ import {
 } from "./ui/dropdown-menu"
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs"
 import { Button } from "./ui/button"
+import Image from "next/image"
 
 interface ProfileProps {
   user: {
@@ -24,15 +25,25 @@ export default function Profile({ user }: ProfileProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant={"outline"}>Profile</Button>
+        <Image
+          src={user.picture!}
+          alt="User Profile"
+          className="rounded-full cursor-pointer"
+          width={35}
+          height={35}
+        />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup className="space-y-1">
-            <DropdownMenuItem disabled>{user.given_name}</DropdownMenuItem>
-            <DropdownMenuItem disabled>{user.email}</DropdownMenuItem>
+            <DropdownMenuItem disabled className="p-1">
+              {user.given_name}
+            </DropdownMenuItem>
+            <DropdownMenuItem disabled className="p-1">
+              {user.email}
+            </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
