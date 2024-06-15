@@ -11,12 +11,15 @@ datasource db {
 }
 
 model Issue {
-  id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(255)
-  description String   @db.Text
-  status      Status   @default(OPEN)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          Int    @id @default(autoincrement())
+  title       String @db.VarChar(255)
+  description String @db.Text
+  status      Status @default(OPEN)
+  usesrId     String
+  user        User   @relation(fields: [usesrId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("issues")
 }
@@ -25,4 +28,18 @@ enum Status {
   OPEN
   IN_PROGRESS
   CLOSED
+}
+
+model User {
+  id          String  @id
+  email       String  @unique
+  given_name  String?
+  family_name String?
+  picture     String?
+  issues      Issue[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
 }

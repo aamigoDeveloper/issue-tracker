@@ -25,13 +25,21 @@ export default function Profile({ user }: ProfileProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Image
+        {user.picture ? <Image
           src={user.picture!}
           alt="User Profile"
           className="rounded-full cursor-pointer"
           width={35}
           height={35}
+        /> : 
+        <Image
+          src={"/placeholder.jfif"}
+          alt="User Profile"
+          className="rounded-full cursor-pointer"
+          width={35}
+          height={35}
         />
+        }
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup>
