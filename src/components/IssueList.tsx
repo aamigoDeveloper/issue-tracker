@@ -30,7 +30,7 @@ export default function IssueList({
   return (
     <Table>
       <TableCaption>
-        A List of Your {status ? `${status}` : ""} Issue&apos;s
+        List of {status ? `${status}` : ""} Issue&apos;s
       </TableCaption>
       <TableHeader>
         <TableRow>
