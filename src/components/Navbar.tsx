@@ -12,6 +12,7 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs/components"
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
 import { Button } from "./ui/button"
+import Profile from "./Profile"
 
 export default function Navbar() {
   const { user } = useKindeBrowserClient()
@@ -64,9 +65,7 @@ export default function Navbar() {
                 </Button>
               </>
             ) : (
-              <Button asChild>
-                <LogoutLink>Sign out</LogoutLink>
-              </Button>
+              <Profile user={user} />
             )}
           </div>
           <ModeToggle />
