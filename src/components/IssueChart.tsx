@@ -21,7 +21,7 @@ export default function IssueChart({ open, inProgress, closed }: IssueChartProps
         <BarChart data={data}>
           <XAxis dataKey="label" />
           <YAxis />
-          <Bar dataKey="value" barSize={60} stroke="white" />
+          <Bar dataKey="value" barSize={60} fill="#3B82F6" stroke="white" />
         </BarChart>
       </ResponsiveContainer>
     </Card>

@@ -15,15 +15,28 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { IssueValidationSchema, issueSchema } from "@/lib/validation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Issue } from "@prisma/client"
+import { Issue, Status } from "@prisma/client"
 import { Loader2 } from "lucide-react"
 import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { useToast } from "./ui/use-toast"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select"
 
 interface IssueFormProps {
   issue?: Issue
 }
+
+const statuses: { label: string; value: Status }[] = [
+  { label: "OPEN", value: "OPEN" },
+  { label: "IN_PROGRESS", value: "IN_PROGRESS" },
+  { label: "CLOSED", value: "CLOSED" },
+]
 
 export default function IssueForm({ issue }: IssueFormProps) {
   const [isPending, startTransition] = useTransition()
@@ -32,6 +45,7 @@ export default function IssueForm({ issue }: IssueFormProps) {
     defaultValues: {
       title: issue?.title,
       description: issue?.description,
+      status: issue?.status,
     },
   })
 
@@ -63,7 +77,9 @@ export default function IssueForm({ issue }: IssueFormProps) {
   return (
     <section className="flex flex-col mx-auto space-y-5 max-w-5xl">
       <div>
-        <h1 className="text-xl font-bold">Create new Issue</h1>
+        <h1 className="text-xl font-bold">
+          {issue ? "Edit" : "Create new"} Issue
+        </h1>
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -99,7 +115,35 @@ export default function IssueForm({ issue }: IssueFormProps) {
               </FormItem>
             )}
           />
-          <Button type="submit">
+          {issue?.userId && (
+            <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={issue?.status}
+                  >
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Current Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {statuses.map((status) => (
+                        <SelectItem key={status.label} value={status.value!}>
+                          {status.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
+          )}
+          <Button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-500 dark:text-white"
+          >
             {isPending && <Loader2 size={16} />}
             {issue ? "Edit Issue" : "Add Issue"}
           </Button>

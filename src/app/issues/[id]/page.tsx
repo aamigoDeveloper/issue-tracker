@@ -44,7 +44,7 @@ export default async function IssueDetailPage({
               height={50}
               className="rounded-full"
             />
-            <p className="font-medium text-zinc-700">
+            <p className="font-medium text-zinc-700 dark:text-slate-100">
               Issue wrote by {user?.given_name} {user?.family_name}
             </p>
           </div>

@@ -1,21 +1,20 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { Bug } from "lucide-react"
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
+import {
+  LoginLink,
+  RegisterLink,
+} from "@kinde-oss/kinde-auth-nextjs/components"
+import { Bug, Loader2Icon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ModeToggle } from "./ModeToggle"
-import {
-  RegisterLink,
-  LoginLink,
-  LogoutLink,
-} from "@kinde-oss/kinde-auth-nextjs/components"
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
-import { Button } from "./ui/button"
 import Profile from "./Profile"
+import { Button } from "./ui/button"
 
 export default function Navbar() {
-  const { user } = useKindeBrowserClient()
+  const { user, isLoading } = useKindeBrowserClient()
   const pathname = usePathname()
 
   const links: {
@@ -57,12 +56,18 @@ export default function Navbar() {
           <div className="space-x-2">
             {!user ? (
               <>
-                <Button asChild variant={"outline"}>
-                  <RegisterLink>Sign up</RegisterLink>
-                </Button>
-                <Button asChild>
-                  <LoginLink>Sign in</LoginLink>
-                </Button>
+                {isLoading ? (
+                  <Loader2Icon className="animate-spin h-4 w-4 mr-3" />
+                ) : (
+                  <>
+                    <Button asChild variant={"outline"}>
+                      <RegisterLink>Sign up</RegisterLink>
+                    </Button>
+                    <Button asChild>
+                      <LoginLink>Sign in</LoginLink>
+                    </Button>
+                  </>
+                )}
               </>
             ) : (
               <Profile user={user} />

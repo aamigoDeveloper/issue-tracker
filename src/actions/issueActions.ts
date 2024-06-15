@@ -3,12 +3,14 @@
 import prisma from "@/lib/db"
 import { issueSchema } from "@/lib/validation"
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
+import { Status } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
 interface FormData {
   title: string
   description: string
+  status: Status
 }
 
 export const createIssue = async (formData: FormData) => {
@@ -88,13 +90,14 @@ export const updateIssue = async (id: number, formData: FormData) => {
     return validate.error.format()
   }
 
-  const { title, description } = validate.data
+  const { title, description, status } = validate.data
 
   await prisma.issue.update({
     where: { id },
     data: {
       title,
       description,
+      status,
     },
   })
 
