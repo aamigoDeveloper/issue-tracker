@@ -10,6 +10,9 @@ import {
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs"
 import { Button } from "./ui/button"
 import Image from "next/image"
+import Link from "next/link"
+import { getUsersIssues } from "@/actions/userActions"
+import { Badge } from "./ui/badge"
 
 interface ProfileProps {
   user: {
@@ -22,24 +25,28 @@ interface ProfileProps {
 }
 
 export default function Profile({ user }: ProfileProps) {
+  const usersIssues = getUsersIssues({ userId: user.id })
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        {user.picture ? <Image
-          src={user.picture!}
-          alt="User Profile"
-          className="rounded-full cursor-pointer"
-          width={35}
-          height={35}
-        /> : 
-        <Image
-          src={"/placeholder.jfif"}
-          alt="User Profile"
-          className="rounded-full cursor-pointer"
-          width={35}
-          height={35}
-        />
-        }
+        {user.picture ? (
+          <Image
+            src={user.picture!}
+            alt="User Profile"
+            className="rounded-full cursor-pointer"
+            width={35}
+            height={35}
+          />
+        ) : (
+          <Image
+            src={"/placeholder.jfif"}
+            alt="User Profile"
+            className="rounded-full cursor-pointer"
+            width={35}
+            height={35}
+          />
+        )}
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup>
@@ -52,6 +59,16 @@ export default function Profile({ user }: ProfileProps) {
             <DropdownMenuItem disabled className="p-1">
               {user.email}
             </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <DropdownMenuLabel className="flex items-center justify-between">
+              My Issues
+              <Badge variant={"outline"}>{usersIssues}</Badge>
+            </DropdownMenuLabel>
+            <Link href={`/profile/${user.id}`}>
+              <DropdownMenuItem className="p-1">Issues</DropdownMenuItem>
+            </Link>
           </DropdownMenuGroup>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
