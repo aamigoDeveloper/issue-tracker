@@ -10,6 +10,17 @@ interface ProfilePageProps {
   searchParams: IssueQuery
 }
 
+export async function generateMetadata({ params }: ProfilePageProps) {
+  const user = await prisma.user.findUnique({
+    where: { id: params.id },
+  })
+
+  return {
+    title: `${user?.given_name} Profile`,
+    description: `${user?.given_name} Issues`,
+  }
+}
+
 export default async function ProfilePage({
   params,
   searchParams,
