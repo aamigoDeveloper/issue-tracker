@@ -6,6 +6,7 @@ import DeleteIssue from "./DeleteIssue"
 import StatusBadge from "@/components/StatusBadge"
 import { cache } from "react"
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
+import Image from "next/image"
 
 interface IssueDetailPageProps {
   params: { id: string }
@@ -34,6 +35,21 @@ export default async function IssueDetailPage({
   return (
     <section className="max-w-6xl mx-auto flex sm:flex-row flex-col space-y-5 items-center justify-between gap-4">
       <div className="max-w-2xl space-y-5">
+        {issue?.userId === user?.id && user?.picture && (
+          <div>
+            <Image
+              src={user.picture}
+              alt="User Profile Image"
+              width={50}
+              height={50}
+              className="rounded-full"
+            />
+            <p className="font-medium text-zinc-700">
+              Issue wrote by {user?.given_name} {user?.family_name}
+            </p>
+          </div>
+        )}
+
         <h2 className="text-lg font-medium">{issue?.title}</h2>
         <div className="flex items-center gap-2">
           <StatusBadge status={issue?.status!} />
