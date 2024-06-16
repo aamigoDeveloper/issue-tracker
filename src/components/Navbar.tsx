@@ -63,10 +63,17 @@ export default function Navbar() {
                   <Loader2Icon className="animate-spin h-4 w-4 mr-3" />
                 ) : (
                   <>
-                    <Button asChild variant={"outline"}>
+                    <Button
+                      asChild
+                      variant={"outline"}
+                      className="hidden sm:inline"
+                    >
                       <RegisterLink>Sign up</RegisterLink>
                     </Button>
-                    <Button asChild>
+                    <Button
+                      asChild
+                      className="bg-blue-600 hover:bg-blue-500 dark:text-white"
+                    >
                       <LoginLink>Sign in</LoginLink>
                     </Button>
                   </>
