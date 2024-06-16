@@ -38,7 +38,7 @@ export default async function IssueDetailPage({
     <section className="max-w-6xl mx-auto flex sm:flex-row flex-col space-y-5 items-center justify-between gap-4">
       <div className="max-w-2xl space-y-5">
         {issue?.userId === user?.id && user?.picture && (
-          <div>
+          <div className="space-y-2">
             <Image
               src={user.picture}
               alt="User Profile Image"
