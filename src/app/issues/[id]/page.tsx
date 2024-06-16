@@ -57,7 +57,7 @@ export default async function IssueDetailPage({
           <StatusBadge status={issue?.status!} />
           <span>{issue?.createdAt.toISOString()}</span>
         </div>
-        <Card className="prose p-2">
+        <Card className="prose px-5">
           <ReactMarkdown className="text-zinc-700 dark:text-slate-300">
             {issue?.description}
           </ReactMarkdown>
