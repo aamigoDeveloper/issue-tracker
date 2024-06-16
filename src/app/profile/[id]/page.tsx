@@ -35,7 +35,10 @@ export default async function ProfilePage({
     <section className="max-w-6xl mx-auto space-y-3">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold">My Issues</h2>
-        <Button asChild>
+        <Button
+          asChild
+          className="bg-blue-600 hover:bg-blue-500 dark:text-white"
+        >
           <Link href={"/issues/new"}>New Issue</Link>
         </Button>
       </div>

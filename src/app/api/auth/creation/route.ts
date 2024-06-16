@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   const user = await getUser()
 
   if (!user || user === null || !user.id) {
-    throw new Error("No User Found.")
+    return NextResponse.json({ error: "No User Found" })
   }
 
   let dbUser = await prisma.user.findUnique({

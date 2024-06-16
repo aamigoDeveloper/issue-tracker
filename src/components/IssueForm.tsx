@@ -15,11 +15,11 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { IssueValidationSchema, issueSchema } from "@/lib/validation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
 import { Issue, Status } from "@prisma/client"
 import { Loader2 } from "lucide-react"
 import { useTransition } from "react"
 import { useForm } from "react-hook-form"
-import { useToast } from "./ui/use-toast"
 import {
   Select,
   SelectContent,
@@ -27,7 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select"
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
+import { useToast } from "./ui/use-toast"
 
 interface IssueFormProps {
   issue?: Issue
@@ -80,90 +80,79 @@ export default function IssueForm({ issue }: IssueFormProps) {
 
   return (
     <section className="flex flex-col mx-auto space-y-5 max-w-5xl">
-      {user?.id === issue?.userId ? (
-        <>
-          <div>
-            <h1 className="text-xl font-bold">
-              {issue ? "Edit" : "Create new"} Issue
-            </h1>
-          </div>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Title</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="Issue" />
-                    </FormControl>
-                    <FormDescription>
-                      This is your Issue&apos;s title
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Description</FormLabel>
-                    <FormControl>
-                      <Textarea placeholder="Description..." {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      This is your Issue&apos;s Description
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {issue?.userId === user?.id && (
-                <FormField
-                  control={form.control}
-                  name="status"
-                  render={({ field }) => (
-                    <FormItem>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={issue?.status}
-                      >
-                        <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Current Status" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {statuses.map((status) => (
-                            <SelectItem
-                              key={status.label}
-                              value={status.value!}
-                            >
-                              {status.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </FormItem>
-                  )}
-                />
+      <div>
+        <h1 className="text-xl font-bold">
+          {issue ? "Edit" : "Create new"} Issue
+        </h1>
+      </div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="Issue" />
+                </FormControl>
+                <FormDescription>
+                  This is your Issue&apos;s title
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="Description..." {...field} />
+                </FormControl>
+                <FormDescription>
+                  This is your Issue&apos;s Description
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {issue?.userId === user?.id && (
+            <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={issue?.status}
+                  >
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Current Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {statuses.map((status) => (
+                        <SelectItem key={status.label} value={status.value!}>
+                          {status.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormItem>
               )}
-              <Button
-                type="submit"
-                className="bg-blue-600 hover:bg-blue-500 dark:text-white"
-              >
-                {isPending && <Loader2 size={16} />}
-                {issue ? "Edit Issue" : "Add Issue"}
-              </Button>
-            </form>
-          </Form>
-        </>
-      ) : (
-        <h3 className="text-center text-2xl font-semibold dark:text-slate-100">
-          You&apos;re not Authorized
-        </h3>
-      )}
+            />
+          )}
+          <Button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-500 dark:text-white"
+          >
+            {isPending && <Loader2 size={16} />}
+            {issue ? "Edit Issue" : "Add Issue"}
+          </Button>
+        </form>
+      </Form>
     </section>
   )
 }
