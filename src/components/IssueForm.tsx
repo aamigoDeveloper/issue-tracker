@@ -160,7 +160,7 @@ export default function IssueForm({ issue }: IssueFormProps) {
               className="bg-blue-600 hover:bg-blue-500 dark:text-white"
             >
               {issue ? "Edit Issue" : "Create Issue"}
-              {isPending && <Loader2 size={16} className="ml-2" />}
+              {isPending && <Loader2 size={16} className="ml-2 animate-spin" />}
             </Button>
           </form>
         </Form>
