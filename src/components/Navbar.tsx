@@ -31,7 +31,7 @@ export default function Navbar() {
     },
   ]
   return (
-    <header className="p-8 mb-7 border-b dark:border-b-slate-700 shadow-sm">
+    <header className="px-2 sm:px-8 py-8 mb-7 border-b dark:border-b-slate-700 shadow-sm">
       <nav className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Link href={"/"}>
