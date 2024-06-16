@@ -28,6 +28,7 @@ import {
   SelectValue,
 } from "./ui/select"
 import { useToast } from "./ui/use-toast"
+import { usePathname } from "next/navigation"
 
 interface IssueFormProps {
   issue?: Issue
@@ -40,6 +41,7 @@ const statuses: { label: string; value: Status }[] = [
 ]
 
 export default function IssueForm({ issue }: IssueFormProps) {
+  const pathname = usePathname()
   const { getUser } = useKindeBrowserClient()
   const user = getUser()
 
@@ -76,6 +78,14 @@ export default function IssueForm({ issue }: IssueFormProps) {
         })
       }
     })
+  }
+
+  if (pathname.startsWith("/issues/edit") && issue?.userId !== user?.id) {
+    return (
+      <h1 className="text-center text-2xl text-slate-900 dark:text-slate-200 font-bold">
+        You&apos;re not Authorized
+      </h1>
+    )
   }
 
   return (
