@@ -12,14 +12,16 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { IssueValidationSchema, issueSchema } from "@/lib/validation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
 import { Issue, Status } from "@prisma/client"
+import "easymde/dist/easymde.min.css"
 import { Loader2 } from "lucide-react"
+import { usePathname } from "next/navigation"
 import { useTransition } from "react"
 import { useForm } from "react-hook-form"
+import SimpleMDE from "react-simplemde-editor"
 import {
   Select,
   SelectContent,
@@ -28,7 +30,6 @@ import {
   SelectValue,
 } from "./ui/select"
 import { useToast } from "./ui/use-toast"
-import { usePathname } from "next/navigation"
 
 interface IssueFormProps {
   issue?: Issue
@@ -119,7 +120,7 @@ export default function IssueForm({ issue }: IssueFormProps) {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Description..." {...field} />
+                    <SimpleMDE placeholder="Description..." {...field} />
                   </FormControl>
                   <FormDescription>
                     This is your Issue&apos;s Description
