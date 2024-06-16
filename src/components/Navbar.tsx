@@ -37,20 +37,23 @@ export default function Navbar() {
           <Link href={"/"}>
             <Bug size={30} />
           </Link>
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "text-lg font-semibold hover:text-zinc-800 dark:text-slate-100 dark:hover:text-slate-300",
-                pathname === link.href
-                  ? "underline hover:text-zinc-800 text-zinc-800 dark:text-slate-300"
-                  : "text-zinc-500  dark:text-slate-100"
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
+          <div className="flex gap-4">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "text-lg font-semibold hover:text-zinc-800 dark:text-slate-100 dark:hover:text-slate-300",
+                  link.href === "/" && "sm:block hidden",
+                  pathname === link.href
+                    ? "underline hover:text-zinc-800 text-zinc-800 dark:text-slate-300"
+                    : "text-zinc-500  dark:text-slate-100"
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
         </div>
         <div className="flex items-center gap-3">
           <div className="space-x-2">
