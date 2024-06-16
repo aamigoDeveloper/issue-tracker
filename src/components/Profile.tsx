@@ -73,7 +73,11 @@ export default function Profile({ user }: ProfileProps) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Button asChild className="w-full" variant={"ghost"}>
+          <Button
+            asChild
+            className="w-full focus-visible:ring-transparent focus-visible:ring-0 bg-blue-600 hover:bg-blue-500 dark:text-white text-white hover:text-white"
+            variant={"ghost"}
+          >
             <LogoutLink>Sign out</LogoutLink>
           </Button>
         </DropdownMenuItem>
