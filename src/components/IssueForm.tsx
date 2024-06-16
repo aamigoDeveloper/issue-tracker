@@ -86,83 +86,83 @@ export default function IssueForm({ issue }: IssueFormProps) {
         You&apos;re not Authorized
       </h1>
     )
-  }
-
-  return (
-    <section className="flex flex-col mx-auto space-y-5 max-w-5xl">
-      <div>
-        <h1 className="text-xl font-bold">
-          {issue ? "Edit" : "Create new"} Issue
-        </h1>
-      </div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="Issue" />
-                </FormControl>
-                <FormDescription>
-                  This is your Issue&apos;s title
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="Description..." {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is your Issue&apos;s Description
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {issue?.userId === user?.id && (
+  } else {
+    return (
+      <section className="flex flex-col mx-auto space-y-5 max-w-5xl">
+        <div>
+          <h1 className="text-xl font-bold">
+            {issue ? "Edit" : "Create new"} Issue
+          </h1>
+        </div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
-              name="status"
+              name="title"
               render={({ field }) => (
                 <FormItem>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={issue?.status}
-                  >
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Current Status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {statuses.map((status) => (
-                        <SelectItem key={status.label} value={status.value!}>
-                          {status.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Issue" />
+                  </FormControl>
+                  <FormDescription>
+                    This is your Issue&apos;s title
+                  </FormDescription>
+                  <FormMessage />
                 </FormItem>
               )}
             />
-          )}
-          <Button
-            type="submit"
-            className="bg-blue-600 hover:bg-blue-500 dark:text-white"
-          >
-            {isPending && <Loader2 size={16} />}
-            {issue ? "Edit Issue" : "Add Issue"}
-          </Button>
-        </form>
-      </Form>
-    </section>
-  )
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Description..." {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    This is your Issue&apos;s Description
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {issue?.userId === user?.id && (
+              <FormField
+                control={form.control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={issue?.status}
+                    >
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Current Status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {statuses.map((status) => (
+                          <SelectItem key={status.label} value={status.value!}>
+                            {status.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+            )}
+            <Button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-500 dark:text-white"
+            >
+              {isPending && <Loader2 size={16} />}
+              {issue ? "Edit Issue" : "Add Issue"}
+            </Button>
+          </form>
+        </Form>
+      </section>
+    )
+  }
 }
