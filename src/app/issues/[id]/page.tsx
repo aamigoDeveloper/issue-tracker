@@ -7,6 +7,8 @@ import StatusBadge from "@/components/StatusBadge"
 import { cache } from "react"
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
 import Image from "next/image"
+import ReactMarkdown from "react-markdown"
+import { Card } from "@/components/ui/card"
 
 interface IssueDetailPageProps {
   params: { id: string }
@@ -55,9 +57,11 @@ export default async function IssueDetailPage({
           <StatusBadge status={issue?.status!} />
           <span>{issue?.createdAt.toISOString()}</span>
         </div>
-        <p className="text-zinc-700 dark:text-slate-300">
-          {issue?.description}
-        </p>
+        <Card className="prose p-2">
+          <ReactMarkdown className="text-zinc-700 dark:text-slate-300">
+            {issue?.description}
+          </ReactMarkdown>
+        </Card>
       </div>
       {user?.id === issue?.userId && (
         <div className="flex flex-col space-y-4 w-full sm:max-w-[200px]">

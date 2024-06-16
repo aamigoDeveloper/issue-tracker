@@ -58,16 +58,16 @@ export default function IssueForm({ issue }: IssueFormProps) {
 
   const { toast } = useToast()
 
-  const onSubmit = async (values: IssueValidationSchema) => {
+  const onSubmit = async (data: IssueValidationSchema) => {
     startTransition(async () => {
       try {
         if (issue) {
-          await updateIssue(issue.id, values)
+          await updateIssue(issue.id, data)
           toast({
             title: "Issue Updated Successfully!",
           })
         } else {
-          await createIssue(values)
+          await createIssue(data)
           toast({
             title: "Issue Created Successfully!",
           })
@@ -156,10 +156,11 @@ export default function IssueForm({ issue }: IssueFormProps) {
             )}
             <Button
               type="submit"
+              disabled={isPending}
               className="bg-blue-600 hover:bg-blue-500 dark:text-white"
             >
-              {isPending && <Loader2 size={16} />}
-              {issue ? "Edit Issue" : "Add Issue"}
+              {issue ? "Edit Issue" : "Create Issue"}
+              {isPending && <Loader2 size={16} className="ml-2" />}
             </Button>
           </form>
         </Form>

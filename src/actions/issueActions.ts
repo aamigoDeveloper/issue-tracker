@@ -10,7 +10,7 @@ import { redirect } from "next/navigation"
 interface FormData {
   title: string
   description: string
-  status: Status
+  status?: Status
 }
 
 export const createIssue = async (formData: FormData) => {
