@@ -81,6 +81,24 @@ export default function IssueForm({ issue }: IssueFormProps) {
     })
   }
 
+  const options: any = {
+    toolbar: [
+      "bold",
+      "italic",
+      "heading",
+      "|",
+      "quote",
+      "unordered-list",
+      "ordered-list",
+      "|",
+      "link",
+      "|",
+      "preview",
+      "side-by-side",
+      "fullscreen",
+    ],
+  }
+
   if (pathname.startsWith("/issues/edit") && issue?.userId !== user?.id) {
     return (
       <h1 className="text-center text-2xl text-slate-900 dark:text-slate-200 font-bold">
@@ -122,7 +140,11 @@ export default function IssueForm({ issue }: IssueFormProps) {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <SimpleMDE placeholder="Description..." {...field} />
+                    <SimpleMDE
+                      placeholder="Description..."
+                      {...field}
+                      options={options}
+                    />
                   </FormControl>
                   <FormDescription>
                     This is your Issue&apos;s Description
