@@ -98,6 +98,7 @@ export default function IssueForm({ issue }: IssueFormProps) {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
+              disabled={isPending}
               control={form.control}
               name="title"
               render={({ field }) => (
@@ -114,6 +115,7 @@ export default function IssueForm({ issue }: IssueFormProps) {
               )}
             />
             <FormField
+              disabled={isPending}
               control={form.control}
               name="description"
               render={({ field }) => (
@@ -138,6 +140,7 @@ export default function IssueForm({ issue }: IssueFormProps) {
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={issue?.status}
+                      disabled={isPending}
                     >
                       <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Current Status" />
