@@ -49,27 +49,27 @@ export default function Profile({ user }: ProfileProps) {
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent>
+        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup className="space-y-1">
+          <DropdownMenuItem disabled className="p-1">
+            {user.given_name}
+          </DropdownMenuItem>
+          <DropdownMenuItem disabled className="p-1">
+            {user.email}
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuLabel className="flex items-center justify-between">
+          My Issues
+          <Badge variant={"outline"}>{usersIssues}</Badge>
+        </DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup className="space-y-1">
-            <DropdownMenuItem disabled className="p-1">
-              {user.given_name}
+          <Link href={`/profile/${user.id}`} className="">
+            <DropdownMenuItem className="p-1 outline-none hover:outline-primary-foreground">
+              Issues
             </DropdownMenuItem>
-            <DropdownMenuItem disabled className="p-1">
-              {user.email}
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuLabel className="flex items-center justify-between">
-              My Issues
-              <Badge variant={"outline"}>{usersIssues}</Badge>
-            </DropdownMenuLabel>
-            <Link href={`/profile/${user.id}`}>
-              <DropdownMenuItem className="p-1">Issues</DropdownMenuItem>
-            </Link>
-          </DropdownMenuGroup>
+          </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
