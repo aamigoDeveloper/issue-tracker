@@ -9,5 +9,5 @@ export function cn(...inputs: ClassValue[]) {
 export function dateFormat(dateStr: Date | string) {
   const date = typeof dateStr === "string" ? parseISO(dateStr) : dateStr
 
-  return format(date, "MMMM dd, yyyy")
+  return format(date, "do MMMM yyyy, h:mm a")
 }
