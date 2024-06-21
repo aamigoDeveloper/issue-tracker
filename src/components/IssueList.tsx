@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { dateFormat } from "@/lib/utils"
 import { Issue, Status } from "@prisma/client"
 import { ArrowUp } from "lucide-react"
 import Link from "next/link"
@@ -69,7 +70,7 @@ export default function IssueList({
               <StatusBadge status={issue.status} />
             </TableCell>
             <TableCell className="hidden sm:block">
-              {issue.createdAt.toISOString()}
+              {dateFormat(issue.createdAt)}
             </TableCell>
           </TableRow>
         ))}
